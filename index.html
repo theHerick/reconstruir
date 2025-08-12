@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Reconstrutor de Imagem Binária</title>
+<style>
+    body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+    textarea { width: 100%; height: 150px; font-family: monospace; }
+    button { padding: 10px; margin-top: 10px; }
+    img { margin-top: 20px; max-width: 100%; border: 1px solid #ccc; }
+</style>
+</head>
+<body>
+
+<h2>Reconstrutor de Imagem Binária</h2>
+<textarea id="binario" placeholder="Cole aqui o código binário (010101...)"></textarea>
+<br>
+<button onclick="reconstruir()">Reconstruir Imagem</button>
+<br>
+<img id="saida" alt="Imagem reconstruída aparecerá aqui">
+
+<script>
+function reconstruir() {
+    let binario = document.getElementById("binario").value.trim();
+    if (!binario) {
+        alert("Cole o código binário primeiro!");
+        return;
+    }
+
+    // Quebrar em bytes
+    let bytes = [];
+    for (let i = 0; i < binario.length; i += 8) {
+        bytes.push(parseInt(binario.substr(i, 8), 2));
+    }
+
+    // Criar blob e URL
+    let blob = new Blob([new Uint8Array(bytes)], {type: "image/png"});
+    let url = URL.createObjectURL(blob);
+    document.getElementById("saida").src = url;
+}
+</script>
+
+</body>
+</html>
